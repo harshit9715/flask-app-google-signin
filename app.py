@@ -56,17 +56,27 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
+    home_base = '''
+            <nav class="menu">
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="/me">Me (API)</a></li>
+                </ul>
+            </nav>
+            <h1>Home</h1>'''
     if current_user.is_authenticated:
-        return (
-            "<p>Hello, {}! You're logged in! Email: {}</p>"
-            "<div><p>Google Profile Picture:</p>"
-            '<img src="{}" alt="Google profile pic"></img></div>'
-            '<a class="button" href="/logout">Logout</a>'.format(
+
+        return ( home_base +
+            '''
+            <p>Hello, {}! You're logged in! Email: {}</p>
+            <div><p>Google Profile Picture:</p>
+            <img src="{}" alt="Google profile pic"></img></div>
+            <a class="button" href="/logout">Logout</a>'''.format(
                 current_user.name, current_user.email, current_user.profile_pic
             )
         )
     else:
-        return '<a class="button" href="/login">Google Login</a>'
+        return home_base + '<a class="button" href="/login">Google Login</a>'
 
 
 @app.route("/login")
