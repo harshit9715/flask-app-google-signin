@@ -1,0 +1,7 @@
+# Exclude
+
+.ipynb_checkpoints/
+.vscode/
+__pycache__/
+
+*sqlite*
