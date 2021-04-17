@@ -4,7 +4,7 @@ import os
 import sqlite3
 
 # Third-party libraries
-from flask import Flask, redirect, request, url_for
+from flask import Flask, redirect, request, url_for, jsonify
 from flask_login import (
     LoginManager,
     current_user,
@@ -147,6 +147,18 @@ def callback():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+@app.route("/me")
+# @login_required
+def profile():
+    if current_user.is_authenticated:
+        return jsonify(
+                name=current_user.name,
+                email=current_user.email,
+                pic=current_user.profile_pic)
+    else:
+        return jsonify(error='unauthorized'), 403
+
 
 
 if __name__ == "__main__":
