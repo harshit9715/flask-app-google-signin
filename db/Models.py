@@ -15,12 +15,12 @@ class User(db.Model):
     hash = db.Column(db.Text, nullable=True)
 
 
-    def __init__(self, username, password, id=uuid4().hex,role='viewer', full_name=None, picture=None):
+    def __init__(self, username, password=None, id=uuid4().hex,role='viewer', full_name=None, picture=None):
         self.id = id
         self.username = username
         self.hash = bcrypt.generate_password_hash(
             password, app.config.get('BCRYPT_LOG_ROUNDS')
-        ).decode()
+        ).decode() if password else None
         self.registered_on = datetime.now()
         self.role = role
         self.full_name = full_name
